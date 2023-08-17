@@ -15,6 +15,7 @@ COPY requirements.txt .
 # Выполнить в текущей директории команду терминала
 # для установки зависимостей.
 RUN pip install -r requirements.txt --no-cache-dir
+# RUN pip install -r /app/requirements.txt --no-cache-dir 
 
 # Скопировать всё необходимое содержимое 
 # той директории локального компьютера, где сохранён Dockerfile,
