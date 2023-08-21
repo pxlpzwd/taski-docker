@@ -8,14 +8,11 @@ FROM python:3.9
 WORKDIR /app
 # Дальнейшие инструкции будут выполняться в директории /app
 
+RUN pip install gunicorn==20.1.0
+
 # Скопировать с локального компьютера файл зависимостей
 # в текущую директорию (текущая директория — это /app).
 COPY requirements.txt .
-
-# В образе нет нужной утилиты? Ок, установим её!
-# Обратите внимание: sudo тут не нужен, так как внутри контейнера
-# все команды выполняются от имени root
-RUN apt-get -y install python3-pip
 
 # Выполнить в текущей директории команду терминала
 # для установки зависимостей.
@@ -28,4 +25,6 @@ RUN pip install -r requirements.txt --no-cache-dir
 COPY . .
 
 # При старте контейнера запустить сервер разработки.
-CMD ["python", "manage.py", "runserver", "0:8000"] 
+# CMD ["python", "manage.py", "runserver", "0:8000"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "backend.wsgi"] 
+ 
